@@ -5,7 +5,18 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "distOS": "electron-builder --mac",
+    "packageOS": "electron-packager . electron-demo --platform=mas --arch=x64 --icon=dms --out=./dist --asar --app-version=1.0.0",
     "start": "electron ."
+  },
+  "build": {
+    "productName": "DMS",
+    "appId": "com.electron.dms.1.0.0",
+    "asar": false,
+    "mac": {
+      "icon": "icons/dms.icns",
+      "target": "default"
+    }
   },
   "repository": {
     "type": "git",
@@ -17,8 +28,14 @@
   "bugs": {
     "url": "https://github.com/dezhizhang/electron-demo/issues"
   },
+  "devDependencies":{
+    "electron": "^15.3.1",
+     
+    "electron-builder": "^22.13.1",
+    "electron-packager": "^15.4.0"
+  },
   "homepage": "https://github.com/dezhizhang/electron-demo#readme",
   "dependencies": {
-    "electron": "^15.3.1"
+  
   }
 }
