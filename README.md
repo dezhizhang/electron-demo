@@ -111,7 +111,93 @@ app.on('window-all-closed',() => {
     app.quit();
 })
 ```
+### electron的打包
+打包是开发 electron 应用中最后的一个环节，也是最重要的一个步骤。如果打包遇到问题， 
+那你前面的所有努力也就白费了。目前官方的打包工具主要包括2种， 
+分别是 electron-packager 和 electron-builder，下面分别介绍这两种打包方式的区别以及注意事项。
+#### electron-packager
+- 安装依赖包
+```
+npm install electron-packager --save-dev
+```
+- 配置package.json脚本
+```
+scripts": {
+   "start": "electron .",
+   "packageOS": "electron-packager . <appname> --platform=mas --arch=x64 --icon=dms --out=./dist --asar --app-version=1.0.0",
+   "packageWin64": "electron-packager . <appname> --platform=win32 --arch=x64 --icon=dms --out=./dist --asar --app-version=1.0.0",
+   "packageWin32": "electron-packager . <appname> --platform=win32 --arch=ia32 --icon=dms --out=./dist --asar --app-version=1.0.0"
+}
+```
+- 优缺点
+置简单，易上手 2）直接生成.app, .exe 等可执行的文件，用户无需安装，打开即可使用。  
+（这样的缺点是包体积会较大，且不能自动添加到用户的快捷方式或者应用程序里面）  
+ 3）打包很慢，卡住不动 4）不支持跨平台打包
 
+#### electron-builder
+- 安装依赖包
+```
+yarn add electron-builder --dev
+```
+- 配置package.json脚本
+```
+"scripts": {
+    "start": "electron .",
+    "distOS": "electron-builder --mac",
+    "distWin64": "electron-builder --win --x64",
+    "distWin32": "electron-builder --win --ia32",
+    "postinstall": "electron-builder install-app-deps",
+},
+
+```
+- mac下配置
+```
+"build": {
+    "productName": "DMS",
+    "appId": "com.electron.dms.1.0.0",
+    "asar": false,
+    "mac": {
+      "icon": "icons/dms.icns",
+      "target": "default"
+    },
+  },
+```
+- windows
+```
+"build": {
+    "productName": "DMS",
+    "appId": "com.electron.dms.1.0.0",
+    "asar": false,
+    "win": {
+      "icon": "icons/dms.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icons/dms.ico",
+      "uninstallerIcon": "icons/dms.ico",
+      "installerHeaderIcon": "icons/dms.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "dms"
+    }
+  },
+```
+- 优缺点
+1）功能强大，上手较复杂，配置参数繁多
+2）即支持生成可执行程序，也可以生成 dmg、exe 等安装程序
+3）内置热升级模块，调用方便
+4）打包时最好使用 cnpm run build，否则镜像下载太慢，会卡住。
+5）支持跨平台打包（mac 打 windows 的包有的依赖包可能下载很慢，需要手动安装）
 
 
 
