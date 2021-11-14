@@ -1,0 +1,24 @@
+{
+  "name": "electron-demo",
+  "version": "1.0.0",
+  "description": "electron-demo",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dezhizhang/electron-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dezhizhang/electron-demo/issues"
+  },
+  "homepage": "https://github.com/dezhizhang/electron-demo#readme",
+  "dependencies": {
+    "electron": "^15.3.1"
+  }
+}
