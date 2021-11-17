@@ -1,13 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2021-11-14 16:06:07
- * @LastEditTime: 2021-11-17 22:29:33
+ * @LastEditTime: 2021-11-17 23:24:24
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /electron-demo/main.js
  */
-const fs = require('fs')
+const fs = require('fs-extra')
 const URL = require("url");
+const Store = require('electron-store')
+// const low = require('lowdb');
+// const FileSync = require('lowdb/adapters/FileSync');
+
 const { app, BrowserWindow, ipcMain, globalShortcut,screen,navigator, webContents,powerMonitor } = require("electron");
 const path = require("path");
 const { double } = require("cli-boxes");
@@ -52,6 +56,33 @@ async function createWindow() {
 
         // 电源
         // console.log(powerMonitor.getSystemIdleState(10))
+
+
+        // 保存用户信息
+        // const dataPath = app.getPath('userData')
+        // console.log('dataPath',dataPath)
+        // const buf = Buffer.from('hello world') 
+        // console.log(buf)
+        // fs.writeFileSync(dataPath + '/a.text',buf,{'encoding':'utf-8'})
+
+        // 第三方数据库lowdb
+        // const adapter = new FileSync('db.json');
+        // const db = low(adapter);
+        // // 查找数据
+        // db.get('post').find({id:1}).value();
+        
+        // // 更新数据
+        // db.get('post').find({title:'low'}).assign({title:'hi'}).write();
+
+        //electron中的store
+        // const store = new Store()
+        // store.set('key','value')
+        // console.log(store.get('key')) 
+        // store.set('foo.bar',true) // 可以级联json对像设置
+        // console.log(store.get('foo'))
+        // store.delete('key')
+
+        
         
         win.loadFile("./public/index.html");
     }
