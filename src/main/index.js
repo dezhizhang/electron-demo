@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-11-14 16:06:07
- * @LastEditTime: 2021-11-14 16:50:11
+ * @LastEditTime: 2021-11-17 19:40:07
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /electron-demo/main.js
  */
-
+const URL = require('url');
 const {app,BrowserWindow,ipcMain}  = require('electron');
+const path = require('path');
 
 let win = null;
 
@@ -21,9 +22,13 @@ function createWindow() {
         }
     });
     win.webContents.openDevTools();
-    //win.loadFile('./public/index.html')
+    // url = URL.format({
+    //     pathname:path.join(__dirname,'index.html'),
+    //     protocol:'file'
+    // })
+    win.loadFile('./public/index.html')
     //win.loadFile('./public/nodejs.html')
-    win.loadFile('./public/ipc.html')
+    // win.loadFile(url)
 }
 
 
