@@ -238,6 +238,10 @@ yarn add electron-builder --dev
 除了上面CDN的情况，还有一种情况是所有的资源都被打包在了APP，这个时候如果系统有更新要怎么办呢？  
 此时要分两种情况，一是能够直接使用update.electronjs.org的情况，另外一种是使用自己的更新服务器。
 
+### 学习资源
+[electron-react](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+[腾讯微信](https://github.com/geeeeeeeeek/electronic-wechat)
+[低码码平台](https://juejin.cn/post/6976476731662139428)
 
 
 
