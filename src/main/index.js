@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-11-14 16:06:07
- * @LastEditTime: 2021-11-17 23:24:24
+ * @LastEditTime: 2021-11-19 01:42:26
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /electron-demo/main.js
@@ -12,7 +12,7 @@ const Store = require('electron-store')
 // const low = require('lowdb');
 // const FileSync = require('lowdb/adapters/FileSync');
 
-const { app, BrowserWindow, ipcMain, globalShortcut,screen,navigator, webContents,powerMonitor } = require("electron");
+const { app, BrowserWindow, ipcMain, globalShortcut,screen,navigator, webContents,powerMonitor,net } = require("electron");
 const path = require("path");
 const { double } = require("cli-boxes");
 require("./menu.js");
@@ -32,6 +32,7 @@ async function createWindow() {
             x:externalDisplay.bounds.x + 50,
             y:externalDisplay.bounds.y + 50,
             webPreferences:{
+                webSecurity:false,
                 nodeIntegration:true,
                 contextIsolation:false,
             }
@@ -94,6 +95,18 @@ async function createWindow() {
 
 
 app.on("ready", createWindow);
+
+//主进程获取数据
+ipcMain.on('ipcRender-main-data',async(event) => {
+  const request = net.request('https://cnodejs.org/api/v1/topics')
+  request.on('response',response => {
+    response.on('data',data => {
+      event.reply('main-data-success',`${data}`)
+      console.log('data',`${data}`)
+    })
+  })
+  request.end()
+})
 
 // ipc通信
 // 主进程主动向渲染进程发消息

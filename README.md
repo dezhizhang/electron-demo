@@ -111,6 +111,35 @@ app.on('window-all-closed',() => {
     app.quit();
 })
 ```
+### 主进程与沉浸进程间数据传递
+```
+//主进程获取数据
+const btn = document.getElementById('btn');
+btn.onclick = function() {
+    ipcRenderer.send('ipcRender-main-data')
+}
+
+ipcRenderer.on('main-data-success',(event,msg) => {
+    console.log('msg',msg)
+})
+
+//主进程获取数据
+ipcMain.on('ipcRender-main-data',async(event) => {
+  const request = net.request('https://cnodejs.org/api/v1/topics')
+  request.on('response',response => {
+    response.on('data',data => {
+        //主进程向沉浸进程发送数据
+      event.reply('main-data-success',`${data}`)
+      console.log('data',`${data}`)
+    })
+  })
+  request.end()
+})
+
+
+```
+
+
 ### electron的打包
 打包是开发 electron 应用中最后的一个环节，也是最重要的一个步骤。如果打包遇到问题， 
 那你前面的所有努力也就白费了。目前官方的打包工具主要包括2种， 
